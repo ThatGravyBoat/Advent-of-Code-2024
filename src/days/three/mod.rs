@@ -3,7 +3,7 @@ use regex::Regex;
 
 pub fn day_three_part_1() {
     let contents = fs::read_to_string("./inputs/day_3.txt").unwrap();
-    let regex = Regex::new(r"mul\((\w{1,3}),(\d{1,3})\)").unwrap();
+    let regex = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
 
     print!("{}", regex.captures_iter(contents.as_str())
         .map(|captures| {
@@ -15,7 +15,7 @@ pub fn day_three_part_1() {
 
 pub fn day_three_part_2() {
     let contents = fs::read_to_string("./inputs/day_3.txt").unwrap();
-    let regex = Regex::new(r"mul\(\w{1,3},\d{1,3}\)|don't\(\)|do\(\)").unwrap();
+    let regex = Regex::new(r"mul\(\d{1,3},\d{1,3}\)|don't\(\)|do\(\)").unwrap();
 
     let mut active = true;
 
