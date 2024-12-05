@@ -1,7 +1,8 @@
-use crate::days::four::{day_four_part_1, day_four_part_2};
+use crate::days::five::day_five;
 
+pub mod utils;
 mod days;
 
 fn main() {
-    day_four_part_2();
+    day_five();
 }
