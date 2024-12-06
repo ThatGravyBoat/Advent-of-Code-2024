@@ -1,8 +1,8 @@
-use crate::days::five::day_five;
+use crate::days::six::day_six;
 
 pub mod utils;
 mod days;
 
 fn main() {
-    day_five();
+    day_six();
 }

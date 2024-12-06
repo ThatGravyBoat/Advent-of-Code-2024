@@ -5,7 +5,7 @@ pub fn day_three_part_1() {
     let contents = fs::read_to_string("./inputs/day_3.txt").unwrap();
     let regex = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)").unwrap();
 
-    print!("{}", regex.captures_iter(contents.as_str())
+    println!("{}", regex.captures_iter(contents.as_str())
         .map(|captures| {
             let (_, [first, second]) = captures.extract();
             first.parse::<i32>().unwrap() * second.parse::<i32>().unwrap()
@@ -19,7 +19,7 @@ pub fn day_three_part_2() {
 
     let mut active = true;
 
-    print!("{}", regex.find_iter(contents.as_str())
+    println!("{}", regex.find_iter(contents.as_str())
         .map(|it| {
             match it.as_str() {
                 "don't()" => active = false,
