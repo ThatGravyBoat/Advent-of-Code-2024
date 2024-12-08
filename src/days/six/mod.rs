@@ -32,22 +32,9 @@ impl Direction {
 
 fn read_board() -> ((i32, i32), Grid<char>) {
     let contents = fs::read_to_string("./inputs/day_6.txt").unwrap();
-    let grid: Vec<Vec<char>> = contents.lines().map(|it| it.chars().collect()).collect();
-
-    let mut pos: Option<(i32, i32)> = None;
-
-    'guard_finder:
-    for y in 0..grid.len() {
-        let row = &grid[y];
-        for x in 0..row.len() {
-            if row[x] == '^' {
-                pos = Some((x as i32, y as i32));
-                break 'guard_finder
-            }
-        }
-    }
-
-    (pos.unwrap(), Grid::from(grid))
+    let grid = Grid::from(contents);
+    let pos: (i32, i32) = grid.find_first(|it| it == &'^').map(|it| (it.0 as i32, it.1 as i32)).unwrap();
+    (pos, grid)
 }
 
 pub fn day_six() {
@@ -60,11 +47,11 @@ pub fn day_six() {
 
     while board.contains(guard.0, guard.1) {
         path.insert((guard.0, guard.1));
-        board.set(guard.0 as usize, guard.1 as usize, 'X');
+        board.try_set(guard.0, guard.1, 'X');
         
         let new_pos = (guard.0 + direction.dir().0, guard.1 + direction.dir().1);
-        if board.contains(new_pos.0, new_pos.1) {
-            if board.get(new_pos.0 as usize, new_pos.1 as usize) == &'#' {
+        if let Some(char) = board.try_get(new_pos.0, new_pos.1) {
+            if char == &'#' {
                 direction = direction.next();
             } else {
                 guard = new_pos;
@@ -84,10 +71,10 @@ pub fn day_six() {
     for point in path {
 
         if let Some(last_point) = last_point {
-            board.set(last_point.0 as usize, last_point.1 as usize, 'X');
+            board.try_set(last_point.0, last_point.1, 'X');
         }
 
-        board.set(point.0 as usize, point.1 as usize, '#');
+        board.try_set(point.0, point.1, '#');
 
         last_point = Some(point);
         guard = original_guard;
@@ -104,8 +91,8 @@ pub fn day_six() {
             new_path.insert((guard.0, guard.1), path_count + 1);
 
             let new_pos = (guard.0 + direction.dir().0, guard.1 + direction.dir().1);
-            if board.contains(new_pos.0, new_pos.1) {
-                if board.get(new_pos.0 as usize, new_pos.1 as usize) == &'#' {
+            if let Some(char) = board.try_get(new_pos.0, new_pos.1) {
+                if char == &'#' {
                     direction = direction.next();
                 } else {
                     guard = new_pos;

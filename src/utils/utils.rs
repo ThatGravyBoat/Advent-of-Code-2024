@@ -70,7 +70,18 @@ impl <T> Grid<T> {
         count
     }
 
-    pub fn get_occurrences(&self, predicate: impl Fn(&T) -> bool) -> Vec<(usize, usize)> {
+    pub fn find_first(&self, predicate: impl Fn(&T) -> bool) -> Option<(usize, usize)> {
+        for (y, row) in self.storage.iter().enumerate() {
+            for (x, value) in row.iter().enumerate() {
+                if predicate(value) {
+                    return Some((x, y))
+                }
+            }
+        }
+        None
+    }
+
+    pub fn find_all(&self, predicate: impl Fn(&T) -> bool) -> Vec<(usize, usize)> {
         let mut output: Vec<(usize, usize)>  = vec![];
 
         for (y, row) in self.storage.iter().enumerate() {

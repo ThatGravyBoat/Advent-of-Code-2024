@@ -19,7 +19,7 @@ pub fn day_eight_part_1() {
     let mut antinodes: Grid<bool> = Grid::new(antennas.width(), antennas.height(), false);
 
     for letter in letters {
-        let occurrences = antennas.get_occurrences(|it| *it == letter);
+        let occurrences = antennas.find_all(|it| *it == letter);
         for (x, y) in &occurrences {
             let x = *x as i32;
             let y = *y as i32;
@@ -45,7 +45,7 @@ pub fn day_eight_part_2() {
     let mut antinodes: Grid<bool> = Grid::new(antennas.width(), antennas.height(), false);
 
     for letter in letters {
-        let occurrences = antennas.get_occurrences(|it| *it == letter);
+        let occurrences = antennas.find_all(|it| *it == letter);
         for (x, y) in &occurrences {
             let x = *x as i32;
             let y = *y as i32;
