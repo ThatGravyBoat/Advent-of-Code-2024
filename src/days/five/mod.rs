@@ -6,7 +6,7 @@ fn is_abiding_by_rules(pages: &Vec<&str>, rules: &HashMap<&str, Vec<&str>>) -> R
     for (i, page) in pages.iter().enumerate() {
         if let Some(need_before) = rules.get(page) {
             for page_before in need_before {
-                let index = pages.index_of(&page_before);
+                let index = pages.index_of(|it| *&it == *&page_before);
                 if index != -1 && index >= i as i32 {
                     return Err((i, index as usize));
                 }
