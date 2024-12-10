@@ -15,6 +15,15 @@ impl <T> Grid<T> {
         Grid::from(grid)
     }
 
+    pub fn map<O>(&self, mapper: impl Fn(&T) -> O) -> Grid<O> {
+        Grid {
+            storage: self.storage.iter()
+                .map(|row|
+                    row.iter().map(|it| mapper(it)).collect()
+                ).collect()
+        }
+    }
+
     pub fn get_storage(&self) -> &Vec<Vec<T>> {
         &self.storage
     }
@@ -33,7 +42,7 @@ impl <T> Grid<T> {
         x >= 0 && x < width && y >= 0 && y < height
     }
 
-    pub fn try_get(&mut self, x: i32, y: i32) -> Option<&T> {
+    pub fn try_get(&self, x: i32, y: i32) -> Option<&T> {
         if self.contains(x, y) {
             Some(self.get(x as usize, y as usize))
         } else {
